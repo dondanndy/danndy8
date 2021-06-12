@@ -33,14 +33,28 @@ CHIP8::~CHIP8() {
 }
 
 bool CHIP8::next() {
+	std::chrono::high_resolution_clock::time_point start, end;
+
+	start = std::chrono::high_resolution_clock::now();
 	nextInstruction();
+	end = std::chrono::high_resolution_clock::now();
+
+	//Time taken for the CPU to evaluate a instruction.
+	auto time_elapsed = std::chrono::duration<double, std::milli>(end - start);
 
 	if (draw_screen) {
 		updateScreen();
 		draw_screen = false;
 	}
 
-	return pullEvents();
+	while (std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now() - start) < tick_duration) {
+		//While we reach the end of the time that the instuction has to take we check for inputs.
+		//We return true if the QUIT input has been received.
+
+		if(pullEvents()) return true;
+	}
+
+	return false;
 }
 
 

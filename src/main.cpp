@@ -66,19 +66,18 @@ int main(int argc, char* args[]) {
 	CHIP8 chip8(rom);
 
 	chip8.createScreen();
-	double FREQUENCY = 500;
+	double FREQUENCY = 500; //Hz
+	std::chrono::duration<double, std::milli> tick_duration(1e3/500);
+
+	//std::cout << tick_duration.count() << std::endl;
 
 	bool quit = false;
 
-	std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+	std::chrono::high_resolution_clock::time_point start, end;
 
 	//Main loop.
 	while (!quit) {
-		/*while ((std::chrono::high_resolution_clock::now() - start).count() < 1 / FREQUENCY) {
-
-		}*/
 		quit = chip8.next();
-		//start = std::chrono::high_resolution_clock::now();
 	}
 
 	chip8.closeScreen();

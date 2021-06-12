@@ -5,6 +5,8 @@
 #include <random>
 #include <iostream>
 #include <chrono>
+#include <ratio>
+#include <thread>
 #include <SDL.h>
 #include <SDL_keycode.h>
 
@@ -31,7 +33,7 @@ private:
 
 	std::array<unsigned short, 16> stack;
 	unsigned short stack_pointer;
-	
+
 	//GPU buffer
 	std::array<unsigned char, 64 * 32> gfx;
 	bool draw_screen;
@@ -51,6 +53,9 @@ private:
 	//timers
 	unsigned char sound_timer;
 	unsigned char delay_timer;
+
+	// Frequency = 500Hz
+	const std::chrono::duration<double, std::milli> tick_duration{1e3 / 500};
 
 	//Instructions, names by opcode.
 	void op_00E0(unsigned short);
