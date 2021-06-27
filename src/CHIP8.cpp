@@ -433,6 +433,19 @@ void CHIP8::op_FXNN(unsigned short data) {
 		V[reg] = delay_timer;
 		break;
 
+	case 0x0A:
+		//Check if any key has been pressed.
+		for (int i = 0; i < keys.size(); i++) {
+			if (keys[i] > 0) {
+				V[reg] = keys[i];
+				pc += 2; //Compensate next add;
+				break;
+			}
+		}
+
+		pc -= 2; //So it doesnt change at the end;
+		break;
+
 	case 0x15:
 		delay_timer = V[reg];
 		break;
