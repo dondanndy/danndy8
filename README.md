@@ -8,3 +8,12 @@ Please, as of right now place your ROMS on the folder called ```ROMS``` (which a
 ## Libraries
 
 This project uses [SDL2](https://www.libsdl.org/download-2.0.php) to present graphics and get controls. In Windows, my recommendation is to use [vcpkg](https://vcpkg.io/en/index.html), but there is also the option of doing it manually.
+
+## TODO
+
+Ongoing and future features:
+
+ - GUI (Coming! check the gui branch)
+ - Different render colors
+ - Correct sound timing
+ - Custom controls
