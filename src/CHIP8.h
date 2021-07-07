@@ -12,12 +12,13 @@
 
 class CHIP8 {
 public:
-	CHIP8(std::vector<char>&);
+	CHIP8();
 	~CHIP8();
 
-	void nextInstruction();
-	void decodeOpcode(unsigned short);
-	bool next();
+	void reset();
+	void loadROM(std::vector<char>& ROM);
+
+	bool tick();
 
 	// Graphics
 	bool createScreen();
@@ -56,6 +57,9 @@ private:
 
 	// Frequency = 500Hz
 	const std::chrono::duration<double, std::milli> tick_duration{1e3 / 500};
+
+	void decodeOpcode(unsigned short);
+	void nextInstruction();
 
 	//Instructions, names by opcode.
 	void op_00E0(unsigned short);

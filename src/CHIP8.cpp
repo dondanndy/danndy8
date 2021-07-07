@@ -1,38 +1,42 @@
 #include "CHIP8.h"
 
-CHIP8::CHIP8(std::vector<char>& rom) {
-		//Let's set the registers.
-		pc = 0x200;
-		V = { 0 };
-		keys = { 0 };
-		I = 0;
-		memory = { 0 };
-
-		gfx = { 0 };
-		draw_screen = false;
-
-		stack = { 0 };
-		stack_pointer = 0;
-
-		delay_timer = 0;
-		sound_timer = 0;
-
-		//We load the ROM.
-		for (int i = 0; i < (int)rom.size(); i++) {
-			memory[i + 512] = rom[i];
-		};
-
-		//We load the fontset.
-		for (int i = 0; i < 80; ++i) {
-			memory[i] = fontset[i];
-		};
+CHIP8::CHIP8() {
+	reset();
 }
 
 CHIP8::~CHIP8() {
 	closeScreen();
 }
 
-bool CHIP8::next() {
+void CHIP8::reset() {
+	pc = 0x200;
+	V = { 0 };
+	keys = { 0 };
+	I = 0;
+	memory = { 0 };
+
+	gfx = { 0 };
+	draw_screen = false;
+
+	stack = { 0 };
+	stack_pointer = 0;
+
+	delay_timer = 0;
+	sound_timer = 0;
+
+	//We load the fontset.
+	for (int i = 0; i < 80; ++i) {
+		memory[i] = fontset[i];
+	};
+}
+
+void CHIP8::loadROM(std::vector<char>& rom) {
+	for (int i = 0; i < (int)rom.size(); i++) {
+		memory[i + 512] = rom[i];
+	};
+}
+
+bool CHIP8::tick() {
 	std::chrono::high_resolution_clock::time_point start, end;
 
 	start = std::chrono::high_resolution_clock::now();
