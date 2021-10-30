@@ -1,5 +1,8 @@
 #include "CHIP8.h"
 
+#include <algorithm>
+#include <iterator>
+
 CHIP8::CHIP8() {
 	reset();
 }
@@ -25,15 +28,13 @@ void CHIP8::reset() {
 	sound_timer = 0;
 
 	//We load the fontset.
-	for (int i = 0; i < 80; ++i) {
-		memory[i] = fontset[i];
-	};
+	std::copy(fontset.begin(), fontset.end(), memory.begin());
 }
 
-void CHIP8::loadROM(std::vector<char>& rom) {
-	for (int i = 0; i < (int)rom.size(); i++) {
-		memory[i + 512] = rom[i];
-	};
+void CHIP8::loadROM(const std::vector<char>& rom) {
+
+	constexpr size_t ROMOffset = 512;
+	std::copy(rom.begin(), rom.end(), memory.begin() + ROMOffset);
 }
 
 bool CHIP8::tick() {

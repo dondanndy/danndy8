@@ -16,7 +16,7 @@ public:
 	~CHIP8();
 
 	void reset();
-	void loadROM(std::vector<char>& ROM);
+	void loadROM(const std::vector<char>& ROM);
 
 	bool tick();
 
